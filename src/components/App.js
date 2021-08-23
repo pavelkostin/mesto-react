@@ -6,7 +6,7 @@ import { PopupEditProfile } from './PopupEditProfile';
 import { PopupEditAvatar } from './PopupEditAvatar';
 import { PopupAddPlace } from './PopupAddPlace';
 import { PopupConfirm } from './PopupConfirm'
-import PopupImage from './PopupImage';
+import ImagePopup from './ImagePopup';
 import Api from '../utils/Api.js';
 import React, { useEffect, useState } from 'react';
 
@@ -76,7 +76,7 @@ export function App() {
         <PopupEditProfile isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
         <PopupAddPlace isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} />
         <PopupEditAvatar isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} />
-        <PopupImage onClose={closeAllPopups} card={selectedCard} />
+        <ImagePopup onClose={closeAllPopups} card={selectedCard} />
         <PopupConfirm />
       </div>
     </>
