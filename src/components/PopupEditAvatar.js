@@ -2,11 +2,11 @@ import React from 'react';
 import { PopupWithForm } from './PopupWithForm';
 import { Input } from './Input';
 
-export function PopupEditAvatar(props) {
+export function PopupEditAvatar({ onClose, isOpen }) {
     return (
         <PopupWithForm
-            onClose={props.onClose}
-            isOpen={props.isOpen}
+            onClose={onClose}
+            isOpen={isOpen}
             classText='avatar'
             name="editAvatar"
             header='Обновить аватар'

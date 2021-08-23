@@ -1,15 +1,15 @@
 import React from 'react';
 
 
-export function Input(props) {
+export function Input({className, placeholder, type, name, id}) {
     return (
         <section>
             <input
-                className={props.className}
-                placeholder={props.placeholder}
-                type={props.type}
-                name={props.name}
-                id={props.id}
+                className={className}
+                placeholder={placeholder}
+                type={type}
+                name={name}
+                id={id}
                 />
         </section>
     )

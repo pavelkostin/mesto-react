@@ -6,7 +6,6 @@ export function Card({ card, onCardClick }) {
         onCardClick(card);
     }
 
-
     return (
         <>
             <li

@@ -2,12 +2,12 @@ import React from 'react'
 import { PopupWithForm } from './PopupWithForm';
 import { Input } from './Input';
 
-export function PopupAddPlace(props) {
+export function PopupAddPlace({onClose, isOpen}) {
     return (
 
         <PopupWithForm
-            onClose={props.onClose}
-            isOpen={props.isOpen}
+            onClose={onClose}
+            isOpen={isOpen}
             classText='add-card'
             name="addCardForm"
             header='Новое место'

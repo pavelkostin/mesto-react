@@ -3,11 +3,11 @@ import { Input } from "./Input";
 import { PopupWithForm } from "./PopupWithForm";
 
 
-export function PopupEditProfile(props) {
+export function PopupEditProfile({ onClose, isOpen }) {
     return (
         <PopupWithForm
-            onClose={props.onClose}
-            isOpen={props.isOpen}
+            onClose={onClose}
+            isOpen={isOpen}
             classText='edit-profile'
             name="editProfileForm"
             header='Редактировать профиль'
@@ -19,14 +19,14 @@ export function PopupEditProfile(props) {
                 type="text"
                 name='name'
                 id='name'
-                />
+            />
             <Input
                 className='popup__input popup__input_job'
                 placeholder='Исследователь океана'
                 type="text"
                 name='job'
                 id='job'
-                />
+            />
         </PopupWithForm>
     )
 }

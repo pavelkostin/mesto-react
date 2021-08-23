@@ -1,34 +1,41 @@
-import React from 'react';
-
+import React, { useEffect, useState } from 'react';
+import Api from '../utils/Api.js';
 import { Card } from './Card.js';
 
-export function Main(props) {
+export function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) {
 
+    const [userInfo, setUserInfo] = useState([])
+    const [cards, setCards] = useState([])
 
+    useEffect(() => {
+        Promise.all([Api.getUSerInfoFromServer(), Api.getCardsFromServer()])
+            .then(([userInfo, cards]) => {
+                setUserInfo(userInfo)
+                setCards(cards)
+            })
+    }, [])
 
     return (
         <main>
             <section className="profile">
                 <div className="profile__info">
-                    <img className="profile__avatar" alt={props.userInfo.name} style={{ backgroundImage: `url(${props.userInfo.avatar})` }} onClick={props.onEditAvatar} />
+                    <img className="profile__avatar" alt={userInfo.name} style={{ backgroundImage: `url(${userInfo.avatar})` }} onClick={onEditAvatar} />
                     <div className="profile__table">
-                        <div className="profile__name">{props.userInfo.name}</div>
-                        <button className="profile__edit" onClick={props.onEditProfile} type="button"></button>
-                        <div className="profile__job">{props.userInfo.about}</div>
+                        <div className="profile__name">{userInfo.name}</div>
+                        <button className="profile__edit" onClick={onEditProfile} type="button"></button>
+                        <div className="profile__job">{userInfo.about}</div>
                     </div>
                 </div>
-                <button className="profile__add" onClick={props.onAddPlace} type="button"></button>
+                <button className="profile__add" onClick={onAddPlace} type="button"></button>
             </section>
             <section className="cards">
                 <ul className="cards__list">
-                    {props.cards.map((card) => {
+                    {cards.map((card) => {
                         return (
                             <Card
-                            
-                            onCardClick={props.onCardClick} 
-                            key={card._id}
-                            card={card}
-
+                                onCardClick={onCardClick}
+                                key={card._id}
+                                card={card}
                             />
                         )
                     })}
