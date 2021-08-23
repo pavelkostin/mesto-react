@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-function PopupImage({card, onClose}) {
+export function ImagePopup ({card, onClose}) {
     return (
         <section
         className={`popup popup_gallery ${card.link ? 'popup_visible' : ''}`}>
@@ -15,4 +15,3 @@ function PopupImage({card, onClose}) {
     )
 }
 
-export default PopupImage;
