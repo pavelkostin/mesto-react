@@ -4,7 +4,7 @@ import { Card } from './Card.js';
 
 export function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) {
 
-    const [userInfo, setUserInfo] = useState([{name: '', about: '', avatar: ''}])
+    const [userInfo, setUserInfo] = useState({name: '', about: '', avatar: ''})
     const [cards, setCards] = useState([])
 
     useEffect(() => {
