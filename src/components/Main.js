@@ -4,13 +4,17 @@ import { Card } from './Card.js';
 
 export function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) {
 
-    const [userInfo, setUserInfo] = useState([])
+    const [userInfo, setUserInfo] = useState([{name: '', about: '', avatar: ''}])
     const [cards, setCards] = useState([])
 
     useEffect(() => {
         Promise.all([Api.getUSerInfoFromServer(), Api.getCardsFromServer()])
             .then(([userInfo, cards]) => {
-                setUserInfo(userInfo)
+                setUserInfo({
+                    name: userInfo.name,
+                    about: userInfo.about,
+                    avatar: userInfo.avatar
+                })
                 setCards(cards)
             })
     }, [])
