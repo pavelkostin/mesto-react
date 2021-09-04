@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import Api from '../utils/Api.js';
 import { Card } from './Card.js';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 export function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) {
+
+    const currentUser = React.useContext(CurrentUserContext);
 
     const [userInfo, setUserInfo] = useState({name: '', about: '', avatar: ''})
     const [cards, setCards] = useState([])
 
     useEffect(() => {
-        Promise.all([Api.getUSerInfoFromServer(), Api.getCardsFromServer()])
-            .then(([userInfo, cards]) => {
-                setUserInfo({
+        Promise.all([/* Api.getUSerInfoFromServer(),  */Api.getCardsFromServer()])
+            .then(([/* userInfo */, cards]) => {
+/*                 setUserInfo({
                     name: userInfo.name,
                     about: userInfo.about,
                     avatar: userInfo.avatar
-                })
+                }) */
                 setCards(cards)
             })
     }, [])
