@@ -1,20 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import Api from '../utils/Api.js';
+import React from 'react';
+
 import { Card } from './Card.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-export function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
+export function Main({ cards, onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
 
     const currentUser = React.useContext(CurrentUserContext);
-
-    const [cards, setCards] = useState([])
-
-    useEffect(() => {
-        Api.getCardsFromServer()
-            .then((cards) => {
-                setCards(cards)
-            })
-    }, [])
 
     return (
         <main>
