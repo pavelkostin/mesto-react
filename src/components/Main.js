@@ -3,21 +3,15 @@ import Api from '../utils/Api.js';
 import { Card } from './Card.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-export function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) {
+export function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
 
     const currentUser = React.useContext(CurrentUserContext);
 
-    const [userInfo, setUserInfo] = useState({name: '', about: '', avatar: ''})
     const [cards, setCards] = useState([])
 
     useEffect(() => {
-        Promise.all([/* Api.getUSerInfoFromServer(),  */Api.getCardsFromServer()])
-            .then(([/* userInfo */, cards]) => {
-/*                 setUserInfo({
-                    name: userInfo.name,
-                    about: userInfo.about,
-                    avatar: userInfo.avatar
-                }) */
+        Api.getCardsFromServer()
+            .then((cards) => {
                 setCards(cards)
             })
     }, [])
@@ -26,11 +20,11 @@ export function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) {
         <main>
             <section className="profile">
                 <div className="profile__info">
-                    <img className="profile__avatar" alt={userInfo.name} style={{ backgroundImage: `url(${userInfo.avatar})` }} onClick={onEditAvatar} />
+                    <img className="profile__avatar" alt={currentUser.name} style={{ backgroundImage: `url(${currentUser.avatar})` }} onClick={onEditAvatar} />
                     <div className="profile__table">
-                        <div className="profile__name">{userInfo.name}</div>
+                        <div className="profile__name">{currentUser.name}</div>
                         <button className="profile__edit" onClick={onEditProfile} type="button"></button>
-                        <div className="profile__job">{userInfo.about}</div>
+                        <div className="profile__job">{currentUser.about}</div>
                     </div>
                 </div>
                 <button className="profile__add" onClick={onAddPlace} type="button"></button>
