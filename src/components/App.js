@@ -13,6 +13,19 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 export function App() {
 
+  const [cards, setCards] = useState([])
+  const [currentUser, setCurrentUser] = useState({});
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
+  const [selectedCard, setSelectedCard] = useState({})
+
+  useEffect(() => {
+      Api.getCardsFromServer()
+          .then((cards) => {
+              setCards(cards)
+          })
+  }, [])
 
   useEffect(()=>{
     Api.getUSerInfoFromServer()
@@ -21,11 +34,17 @@ export function App() {
       })
   })
 
-  const [currentUser, setCurrentUser] = useState({});
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
-  const [selectedCard, setSelectedCard] = useState({})
+
+  function handleCardLike(card) {
+
+    // Снова проверяем, есть ли уже лайк на этой карточке
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    // Отправляем запрос в API и получаем обновлённые данные карточки
+    Api.changeLikeCardStatus(card, !isLiked).then((newCard) => {
+        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+    });
+
+}
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true)
@@ -56,11 +75,13 @@ export function App() {
         <div className='page'>
           <Header />
           <Main
+          
             onEditProfile={handleEditProfileClick}
             onEditAvatar={handleEditAvatarClick}
             onAddPlace={handleAddPlaceClick}
             onCardClick={handleCardClick}
-          
+            onCardLike={handleCardLike}
+            cards={cards}
           />
           <Footer />
           <PopupEditProfile isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />

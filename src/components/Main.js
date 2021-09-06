@@ -3,34 +3,9 @@ import Api from '../utils/Api.js';
 import { Card } from './Card.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-export function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
+export function Main({ cards, onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike }) {
 
     const currentUser = React.useContext(CurrentUserContext);
-    
-        
-    const [cards, setCards] = useState([])
-
-
-        useEffect(() => {
-            Api.getCardsFromServer()
-                .then((cards) => {
-                    setCards(cards)
-                })
-        }, [])
-
-
-        /* 
-        function handleCardLike(card) {
-    
-            // Снова проверяем, есть ли уже лайк на этой карточке
-            const isLiked = card.likes.some(i => i._id === currentUser._id);
-    
-            // Отправляем запрос в API и получаем обновлённые данные карточки
-            Api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
-                setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-            });
-    
-        } */
 
     return (
         <main>
@@ -50,7 +25,7 @@ export function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
                     {cards.map((card) => {
                         return (
                             <Card
-                                /* onCardLike={handleCardLike} */
+                                onCardLike={onCardLike}
                                 onCardClick={onCardClick}
                                 key={card._id}
                                 card={card}
