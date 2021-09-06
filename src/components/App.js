@@ -13,18 +13,15 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 export function App() {
 
-  useEffect(()=>{
-    Promise.all([Api.getUSerInfoFromServer(), Api.getCardsFromServer()])
-      .then(([userInfo, cards])=>{
-        setCurrentUser(userInfo)
-        setCards(cards)
-      })
-  }, [])
 
+  useEffect(()=>{
+    Api.getUSerInfoFromServer()
+      .then((userInfo) =>{
+        setCurrentUser(userInfo)
+      })
+  })
 
   const [currentUser, setCurrentUser] = useState({});
-  const [cards, setCards] = useState([])
-
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
@@ -63,7 +60,7 @@ export function App() {
             onEditAvatar={handleEditAvatarClick}
             onAddPlace={handleAddPlaceClick}
             onCardClick={handleCardClick}
-            cards={cards}
+          
           />
           <Footer />
           <PopupEditProfile isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />

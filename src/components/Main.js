@@ -3,19 +3,23 @@ import Api from '../utils/Api.js';
 import { Card } from './Card.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-export function Main({ cards, onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
+export function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
 
     const currentUser = React.useContext(CurrentUserContext);
     
         
-    /* 
+    const [cards, setCards] = useState([])
+
+
         useEffect(() => {
             Api.getCardsFromServer()
                 .then((cards) => {
                     setCards(cards)
                 })
         }, [])
-    
+
+
+        /* 
         function handleCardLike(card) {
     
             // Снова проверяем, есть ли уже лайк на этой карточке
