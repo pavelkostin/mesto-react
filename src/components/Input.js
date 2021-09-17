@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-export function Input({className, placeholder, type, name, id}) {
+export function Input({className, placeholder, type, name, id, onChange}) {
     return (
         <section>
             <input
@@ -10,6 +10,7 @@ export function Input({className, placeholder, type, name, id}) {
                 type={type}
                 name={name}
                 id={id}
+                onChange={onChange}
                 />
         </section>
     )

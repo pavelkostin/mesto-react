@@ -80,6 +80,14 @@ export function App() {
       })
   }
 
+  function handleUpdateUser(user) {
+    newApi.setUserInfo(user)
+      .then((currentUser)=>{
+        setCurrentUser(currentUser)
+        closeAllPopups()
+      })
+  }
+
 
   return (
 
@@ -96,7 +104,7 @@ export function App() {
           cards={cards}
         />
         <Footer />
-        <PopupEditProfile isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
+        <PopupEditProfile isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
         <PopupAddPlace isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} />
         <PopupEditAvatar isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} />
         <ImagePopup onClose={closeAllPopups} card={selectedCard} />
