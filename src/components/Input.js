@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-export function Input({className, placeholder, type, name, id, onChange}) {
+export function Input({className, placeholder, type, name, id, onChange, inputRef}) {
     return (
         <section>
             <input
@@ -11,6 +11,7 @@ export function Input({className, placeholder, type, name, id, onChange}) {
                 name={name}
                 id={id}
                 onChange={onChange}
+                ref={inputRef}
                 />
         </section>
     )
