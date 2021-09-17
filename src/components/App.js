@@ -96,6 +96,15 @@ export function App() {
     })
   }
 
+  function handleAddPlaceSubmit(data) {
+    newApi.postNewCard(data)
+      .then(res => {
+        setCards([res, ...cards])
+        closeAllPopups()
+      })
+
+  }
+
 
   return (
 
@@ -113,7 +122,7 @@ export function App() {
         />
         <Footer />
         <PopupEditProfile isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
-        <PopupAddPlace isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} />
+        <PopupAddPlace isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit}/>
         <PopupEditAvatar isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/>
         <ImagePopup onClose={closeAllPopups} card={selectedCard} />
         <PopupConfirm />
