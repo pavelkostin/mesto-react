@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import Api from '../utils/Api.js';
+import React, { useContext } from 'react';
+import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import { Card } from './Card.js';
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-export function Main({ cards, onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike }) {
 
-    const currentUser = React.useContext(CurrentUserContext);
+export function Main({ cards, onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike, onCardDelete }) {
+
+    const currentUser = useContext(CurrentUserContext);
 
     return (
         <main>
@@ -27,6 +27,7 @@ export function Main({ cards, onEditAvatar, onEditProfile, onAddPlace, onCardCli
                             <Card
                                 onCardLike={onCardLike}
                                 onCardClick={onCardClick}
+                                onCardDelete={onCardDelete}
                                 key={card._id}
                                 card={card}
                             />

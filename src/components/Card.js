@@ -1,34 +1,31 @@
-import React from 'react'
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import React, { useContext } from 'react';
+import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
-export function Card({ card, onCardClick, onCardLike }) {
 
-    const currentUser = React.useContext(CurrentUserContext);
+export function Card({ card, onCardClick, onCardLike, onCardDelete }) {
 
+    const currentUser = useContext(CurrentUserContext);
+
+    // deletion btn class
     const isOwn = card.owner._id === currentUser._id;
-    const cardDeleteButtonClassName = (
-        `${isOwn ? 'cards__delete' : 'cards__delete_hidden'}`
+    const delBtnClass = (
+        ` ${isOwn ? 'cards__delete' : 'cards__delete_hidden'}`
     );
 
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
-    const cardLikeButtonClassName = `cards__like ${isLiked ? 'cards__like_active' : ''}`;
-
-    function handleClick() {
-        onCardClick(card);
-    }
-
-    function handleLikeClick() {
-        onCardLike(card)
-    }
+    // like btn class
+    const isLiked = card.likes.some(like=>like._id === currentUser._id)
+    const likeBtnClass = (
+        `cards__like ${isLiked ? 'cards__like_active' : ''}`
+    )
 
     return (
         <>
             <li
                 className="cards__item">
-                <img className="cards__photo" onClick={handleClick} src={card.link} alt={card.name} />
+                <img className="cards__photo" onClick={() => { onCardClick(card) }} src={card.link} alt={card.name} />
                 <p className="cards__place">{card.name}</p>
-                <button className={cardDeleteButtonClassName}></button>
-                <button className={cardLikeButtonClassName} onClick={handleLikeClick}></button>
+                <button className={delBtnClass} onClick={()=>{onCardDelete(card)}}></button>
+                <button className={likeBtnClass} onClick={() => { onCardLike(card)}}></button>
                 <p className="cards__quantity-likes">{card.likes.length}</p>
             </li>
 

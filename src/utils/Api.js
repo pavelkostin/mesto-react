@@ -67,23 +67,23 @@ class Api {
 
     deleteCard(card) {
 
-        return fetch(`${this._url}/cards/${card._cardId}`, {
+        return fetch(`${this._url}/cards/${card._id}`, {
             method: "DELETE",
             headers: this._headers
         })
             .then(this._checkResponse);
     }
 
-    changeLikeCardStatus(card, likeCardStatus) {
+    changeLikeCardStatus(card, isLiked) {
         return fetch(`${this._url}/cards/likes/${card._id}`, {
-            method: (likeCardStatus ? "PUT" : "DELETE"),
+            method: (isLiked ? "PUT" : "DELETE"),
             headers: this._headers
         })
-            .then(this._checkResponse);
+        .then(this._checkResponse)
+
     }
 
-
-    likeCard(card) {
+/*     likeCard(card) {
         return fetch(`${this._url}/cards/likes/${card._cardId}`, {
             method: 'PUT',
             headers: this._headers
@@ -97,15 +97,15 @@ class Api {
             headers: this._headers
         })
             .then(this._checkResponse)
-    }
+    } */
 
 
-    getCountsOfLikes(card) {
-        return fetch(`${this._url}/cards/likes/${card._cardId}`, {
+/*     getCountsOfLikes(card) {
+        return fetch(`${this._url}/cards/likes/${card._id}`, {
             headers: this._headers
         })
             .then(this._checkResponse)
-    }
+    } */
 
     editAvatar(avatar) {
         return fetch(`${this._url}/users/me/avatar`, {
@@ -120,7 +120,7 @@ class Api {
 }
 
 
-const newApi = new Api({
+export const newApi = new Api({
     url: "https://nomoreparties.co/v1/cohort-22",
     headers: {
         authorization: "1ee4b4ce-cc80-4da8-ae23-ade464e5dd65",
@@ -128,4 +128,3 @@ const newApi = new Api({
     },
 });
 
-export default newApi

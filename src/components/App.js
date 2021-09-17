@@ -8,43 +8,34 @@ import { PopupEditAvatar } from './PopupEditAvatar';
 import { PopupAddPlace } from './PopupAddPlace';
 import { PopupConfirm } from './PopupConfirm';
 import { ImagePopup } from './ImagePopup';
-import Api from '../utils/Api.js';
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import { newApi } from '../utils/Api.js';
+import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
+
 
 export function App() {
 
   const [cards, setCards] = useState([])
   const [currentUser, setCurrentUser] = useState({});
+
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
   const [selectedCard, setSelectedCard] = useState({})
 
   useEffect(() => {
-      Api.getCardsFromServer()
-          .then((cards) => {
-              setCards(cards)
-          })
+    newApi.getCardsFromServer()
+      .then((data) => {
+        setCards(data)
+      })
   }, [])
 
-  useEffect(()=>{
-    Api.getUSerInfoFromServer()
-      .then((userInfo) =>{
-        setCurrentUser(userInfo)
+  useEffect(() => {
+    newApi.getUSerInfoFromServer()
+      .then((data) => {
+        setCurrentUser(data)
+        console.log(data);
       })
-  })
-
-
-  function handleCardLike(card) {
-
-    // Снова проверяем, есть ли уже лайк на этой карточке
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
-    // Отправляем запрос в API и получаем обновлённые данные карточки
-    Api.changeLikeCardStatus(card, !isLiked).then((newCard) => {
-        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-    });
-
-}
+  }, [])
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true)
@@ -69,28 +60,49 @@ export function App() {
     setSelectedCard({});
   }
 
-  return (
-    <CurrentUserContext.Provider value={currentUser}>
-      <>
-        <div className='page'>
-          <Header />
-          <Main
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(like => like._id === currentUser._id)
+
+    newApi.changeLikeCardStatus(card, !isLiked)
+      .then((newCard) => {
+        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+      });
+  }
+
+  function handleCardDelete(card) {
+    newApi.deleteCard(card)
+      .then(() => {
+        setCards(cards.filter((cardsList)=>{
           
-            onEditProfile={handleEditProfileClick}
-            onEditAvatar={handleEditAvatarClick}
-            onAddPlace={handleAddPlaceClick}
-            onCardClick={handleCardClick}
-            onCardLike={handleCardLike}
-            cards={cards}
-          />
-          <Footer />
-          <PopupEditProfile isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
-          <PopupAddPlace isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} />
-          <PopupEditAvatar isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} />
-          <ImagePopup onClose={closeAllPopups} card={selectedCard} />
-          <PopupConfirm />
-        </div>
-      </>
+          return cardsList._id !== card._id
+
+        }))
+      })
+  }
+
+
+  return (
+
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className='page'>
+        <Header />
+        <Main
+          onEditProfile={handleEditProfileClick}
+          onEditAvatar={handleEditAvatarClick}
+          onAddPlace={handleAddPlaceClick}
+          onCardClick={handleCardClick}
+          onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
+          cards={cards}
+        />
+        <Footer />
+        <PopupEditProfile isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
+        <PopupAddPlace isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} />
+        <PopupEditAvatar isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} />
+        <ImagePopup onClose={closeAllPopups} card={selectedCard} />
+        <PopupConfirm />
+      </div>
     </CurrentUserContext.Provider>
+
   )
 }
