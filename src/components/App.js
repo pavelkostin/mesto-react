@@ -22,18 +22,11 @@ export function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
   const [selectedCard, setSelectedCard] = useState({})
 
-  useEffect(() => {
-    newApi.getCardsFromServer()
-      .then((data) => {
-        setCards(data)
-      })
-  }, [])
-
-  useEffect(() => {
-    newApi.getUSerInfoFromServer()
-      .then((data) => {
-        setCurrentUser(data)
-        console.log(data);
+  useEffect(()=>{
+    Promise.all([newApi.getUSerInfoFromServer(), newApi.getCardsFromServer()])
+      .then(([user, cards])=>{
+        setCurrentUser(user)
+        setCards(cards)
       })
   }, [])
 
