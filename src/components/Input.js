@@ -1,10 +1,12 @@
 import React from 'react';
 
 
-export function Input({className, placeholder, type, name, id, onChange, inputRef}) {
+export function Input({value, className, placeholder, type, name, id, onChange, inputRef}) {
     return (
-        <section>
+        <section className='popup__section'>
             <input
+                // если здесь ставить value={value} возникает ошибка, где реакт просит определиться: 
+                // Decide between using a controlled or uncontrolled input element for the lifetime of the component.
                 className={className}
                 placeholder={placeholder}
                 type={type}

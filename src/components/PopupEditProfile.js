@@ -14,7 +14,7 @@ export function PopupEditProfile({ onUpdateUser, onClose, isOpen }) {
     React.useEffect(() => {
         setName(currentUser.name);
         setAbout(currentUser.about);
-    }, [currentUser]);
+    }, [currentUser, isOpen]);
 
     function changeName(e) {
         setName(e.target.value)
@@ -44,16 +44,18 @@ export function PopupEditProfile({ onUpdateUser, onClose, isOpen }) {
             onSubmit={handleSubmit}
         >
             <Input
+                value={name}
                 className='popup__input popup__input_name'
-                placeholder='Жак-Ив Кусто'
+                placeholder='Имя'
                 type="text"
                 name='name'
                 id='name'
                 onChange={changeName}
             />
             <Input
+                value={about}
                 className='popup__input popup__input_job'
-                placeholder='Исследователь океана'
+                placeholder='Профессия'
                 type="text"
                 name='job'
                 id='job'
