@@ -12,6 +12,8 @@ export function PopupEditProfile({ onUpdateUser, onClose, isOpen }) {
     const currentUser = React.useContext(CurrentUserContext);
 
     React.useEffect(() => {
+
+        
         setName(currentUser.name);
         setAbout(currentUser.about);
     }, [currentUser, isOpen]);
